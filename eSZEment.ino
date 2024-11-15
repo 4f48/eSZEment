@@ -57,6 +57,8 @@ void setup() {
   Serial.println(F("Initializing DMP..."));
   devStatus = mpu.dmpInitialize();
 
+  mpu.setZAccelOffset(-1000);
+
   if (devStatus == 0) {
     mpu.CalibrateAccel(6);
     mpu.CalibrateGyro(6);
@@ -91,11 +93,11 @@ void loop() {
       mpu.dmpGetGravity(&gravity, &q);
       mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
       mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-      Serial.print("aworld\t");
+      Serial.print("X,Y,Z:\t");
       Serial.print(aaWorld.x);
-      Serial.print("\t");
+      Serial.print(",\t");
       Serial.print(aaWorld.y);
-      Serial.print("\t");
+      Serial.print(",\t");
       Serial.println(aaWorld.z);
   }
 }
